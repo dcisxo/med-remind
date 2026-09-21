@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Login({ onSuccess }) {
   const { login } = useAuth();
@@ -42,6 +43,9 @@ export default function Login({ onSuccess }) {
       <button type="submit" disabled={submitting}>
         {submitting ? 'Logging in…' : 'Log In'}
       </button>
+      <p>
+        Don't have an account? <Link to="/register">Create one</Link>
+      </p>
     </form>
   );
 }

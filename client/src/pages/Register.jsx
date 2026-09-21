@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Register({ onSuccess }) {
   const { register } = useAuth();
@@ -72,6 +73,9 @@ export default function Register({ onSuccess }) {
       <button type="submit" disabled={submitting}>
         {submitting ? 'Creating account…' : 'Create Account'}
       </button>
+      <p>
+        Already have an account? <Link to="/login">Log in</Link>
+      </p>
     </form>
   );
 }
