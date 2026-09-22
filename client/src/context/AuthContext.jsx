@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AuthContext } from './auth-context';
-
-const API_BASE = import.meta.env?.VITE_API_URL || 'http://localhost:5000/api';
+import { API_BASE } from '../api/http';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);

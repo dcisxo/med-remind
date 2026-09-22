@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/authRoutes');
 const caregiverRoutes = require('./routes/caregiverRoutes');
+const medicationRoutes = require('./routes/medicationRoutes');
+const doseLogRoutes = require('./routes/doseLogRoutes');
 
 const app = express();
 
@@ -17,6 +19,8 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/caregiver', caregiverRoutes);
+app.use('/api/medications', medicationRoutes);
+app.use('/api/doselogs', doseLogRoutes);
 
 const PORT = process.env.PORT || 5000;
 
