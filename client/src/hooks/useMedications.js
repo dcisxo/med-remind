@@ -29,10 +29,10 @@ export function useMedications(patientId) {
     loadMedications();
   }, [patientId, token]);
 
-  async function addMedication({ name, dosage, frequency, instructions }) {
+  async function addMedication({ name, dosage, frequency, instructions, sideEffects }) {
     const data = await apiFetch('/medications', token, {
       method: 'POST',
-      body: { patientId, name, dosage, frequency, instructions },
+      body: { patientId, name, dosage, frequency, instructions, sideEffects },
     });
     setMedications((prev) => [data.medication, ...prev]);
   }

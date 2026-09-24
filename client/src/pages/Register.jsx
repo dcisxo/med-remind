@@ -26,9 +26,14 @@ export default function Register({ onSuccess }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="auth-card">
+      <div className="brand">
+        <img src="/favicon.svg" alt="" />
+        <span>Med Remind</span>
+      </div>
+      <form onSubmit={handleSubmit}>
       <h2>Create Account</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="form-error">{error}</p>}
       <label>
         Name
         <input value={name} onChange={(e) => setName(e.target.value)} required />
@@ -76,6 +81,7 @@ export default function Register({ onSuccess }) {
       <p>
         Already have an account? <Link to="/login">Log in</Link>
       </p>
-    </form>
+      </form>
+    </div>
   );
 }

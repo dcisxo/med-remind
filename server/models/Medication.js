@@ -26,6 +26,10 @@ const medicationSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    sideEffects: {
+      type: String,
+      trim: true,
+    },
     active: {
       type: Boolean,
       default: true,

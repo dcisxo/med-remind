@@ -10,6 +10,11 @@ export default function MedicationList({ medications, canEdit, onLogDose, onDele
           <div className="medication-info">
             <strong>{med.name}</strong> — {med.dosage}, {med.frequency}
             {med.instructions && <p className="medication-instructions">{med.instructions}</p>}
+            {med.sideEffects && (
+              <p className="medication-side-effects">
+                <span className="side-effects-label">May cause:</span> {med.sideEffects}
+              </p>
+            )}
           </div>
           {canEdit && (
             <div className="medication-actions">

@@ -4,9 +4,12 @@ import { useAuth } from '../hooks/useAuth';
 import { useMedications } from '../hooks/useMedications';
 import { useDoseLogs } from '../hooks/useDoseLogs';
 import { useCaregiverPatients } from '../hooks/useCaregiverPatients';
+import { useCaregiverInvites } from '../hooks/useCaregiverInvites';
 import AddMedicationForm from '../components/AddMedicationForm';
 import MedicationList from '../components/MedicationList';
 import DoseHistory from '../components/DoseHistory';
+import InvitePatientForm from '../components/InvitePatientForm';
+import PendingInvites from '../components/PendingInvites';
 
 function PatientPanel({ patientId, canEdit }) {
   const { medications, error: medError, addMedication, deleteMedication } =
@@ -42,36 +45,56 @@ function PatientPanel({ patientId, canEdit }) {
 }
 
 function CaregiverView() {
-  const { links, loading, error } = useCaregiverPatients();
+  const { links, loading, error, invitePatient } = useCaregiverPatients();
   const [selectedPatientId, setSelectedPatientId] = useState(null);
 
   if (loading) return <p>Loading your patients…</p>;
-  if (error) return <p className="form-error">{error}</p>;
-  if (links.length === 0) {
-    return <p>No linked patients yet. Invite a patient to get started.</p>;
-  }
 
   const selectedLink = links.find((link) => link.patient._id === selectedPatientId) || links[0];
 
   return (
     <>
-      <section>
-        <h3>Your Patients</h3>
-        <ul className="patient-list">
-          {links.map((link) => (
-            <li key={link._id}>
-              <button
-                type="button"
-                className={link.patient._id === selectedLink.patient._id ? 'active' : ''}
-                onClick={() => setSelectedPatientId(link.patient._id)}
-              >
-                {link.patient.name} ({link.permission})
-              </button>
-            </li>
-          ))}
-        </ul>
-      </section>
-      <PatientPanel patientId={selectedLink.patient._id} canEdit={selectedLink.permission === 'edit'} />
+      <InvitePatientForm onInvite={invitePatient} />
+
+      {error && <p className="form-error">{error}</p>}
+      {links.length === 0 ? (
+        <p>No linked patients yet. Invite a patient to get started.</p>
+      ) : (
+        <>
+          <section>
+            <h3>Your Patients</h3>
+            <ul className="patient-list">
+              {links.map((link) => (
+                <li key={link._id}>
+                  <button
+                    type="button"
+                    className={link.patient._id === selectedLink.patient._id ? 'active' : ''}
+                    onClick={() => setSelectedPatientId(link.patient._id)}
+                  >
+                    {link.patient.name} ({link.permission})
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+          <PatientPanel
+            patientId={selectedLink.patient._id}
+            canEdit={selectedLink.permission === 'edit'}
+          />
+        </>
+      )}
+    </>
+  );
+}
+
+function PatientDashboard({ patientId }) {
+  const { invites, error, acceptInvite } = useCaregiverInvites();
+
+  return (
+    <>
+      {error && <p className="form-error">{error}</p>}
+      <PendingInvites invites={invites} onAccept={acceptInvite} />
+      <PatientPanel patientId={patientId} canEdit />
     </>
   );
 }
@@ -88,14 +111,17 @@ export default function Dashboard() {
   return (
     <div className="dashboard-page">
       <header className="dashboard-header">
-        <h1>Welcome, {user.name}</h1>
+        <div className="brand">
+          <img src="/favicon.svg" alt="" />
+          <h1>Hi, {user.name}</h1>
+        </div>
         <button type="button" onClick={handleLogout}>
           Log Out
         </button>
       </header>
 
       {user.role === 'patient' ? (
-        <PatientPanel patientId={user.id} canEdit />
+        <PatientDashboard patientId={user.id} />
       ) : (
         <CaregiverView />
       )}

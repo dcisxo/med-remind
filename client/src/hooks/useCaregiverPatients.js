@@ -26,5 +26,12 @@ export function useCaregiverPatients() {
     loadPatients();
   }, [token, user]);
 
-  return { links, loading, error };
+  async function invitePatient(patientEmail, permission) {
+    await apiFetch('/caregiver/invite', token, {
+      method: 'POST',
+      body: { patientEmail, permission },
+    });
+  }
+
+  return { links, loading, error, invitePatient };
 }

@@ -5,7 +5,7 @@ const { resolvePatientAccess } = require('../utils/patientAccess');
 // POST /api/medications
 async function createMedication(req, res) {
   try {
-    const { patientId, name, dosage, frequency, instructions } = req.body;
+    const { patientId, name, dosage, frequency, instructions, sideEffects } = req.body;
 
     if (!name || !dosage || !frequency) {
       return res.status(400).json({ message: 'Name, dosage, and frequency are required' });
@@ -19,6 +19,7 @@ async function createMedication(req, res) {
       dosage,
       frequency,
       instructions,
+      sideEffects,
     });
 
     res.status(201).json({ medication });
@@ -48,11 +49,12 @@ async function updateMedication(req, res) {
 
     await resolvePatientAccess(req.user, medication.patient.toString(), { requireEdit: true });
 
-    const { name, dosage, frequency, instructions, active } = req.body;
+    const { name, dosage, frequency, instructions, sideEffects, active } = req.body;
     if (name !== undefined) medication.name = name;
     if (dosage !== undefined) medication.dosage = dosage;
     if (frequency !== undefined) medication.frequency = frequency;
     if (instructions !== undefined) medication.instructions = instructions;
+    if (sideEffects !== undefined) medication.sideEffects = sideEffects;
     if (active !== undefined) medication.active = active;
 
     await medication.save();

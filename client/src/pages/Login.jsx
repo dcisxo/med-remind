@@ -24,28 +24,39 @@ export default function Login({ onSuccess }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Log In</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <label>
-        Email
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button type="submit" disabled={submitting}>
-        {submitting ? 'Logging in…' : 'Log In'}
-      </button>
-      <p>
-        Don't have an account? <Link to="/register">Create one</Link>
-      </p>
-    </form>
+    <div className="auth-card">
+      <div className="brand">
+        <img src="/favicon.svg" alt="" />
+        <span>Med Remind</span>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <h2>Log In</h2>
+        {error && <p className="form-error">{error}</p>}
+        <label>
+          Email
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Password
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </label>
+        <button type="submit" disabled={submitting}>
+          {submitting ? 'Logging in…' : 'Log In'}
+        </button>
+        <p>
+          Don't have an account? <Link to="/register">Create one</Link>
+        </p>
+      </form>
+    </div>
   );
 }

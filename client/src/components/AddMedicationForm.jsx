@@ -5,6 +5,7 @@ export default function AddMedicationForm({ onAdd }) {
   const [dosage, setDosage] = useState('');
   const [frequency, setFrequency] = useState('');
   const [instructions, setInstructions] = useState('');
+  const [sideEffects, setSideEffects] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -13,11 +14,12 @@ export default function AddMedicationForm({ onAdd }) {
     setError('');
     setSubmitting(true);
     try {
-      await onAdd({ name, dosage, frequency, instructions });
+      await onAdd({ name, dosage, frequency, instructions, sideEffects });
       setName('');
       setDosage('');
       setFrequency('');
       setInstructions('');
+      setSideEffects('');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -54,6 +56,15 @@ export default function AddMedicationForm({ onAdd }) {
       <label>
         Instructions (optional)
         <input value={instructions} onChange={(e) => setInstructions(e.target.value)} />
+      </label>
+      <label>
+        Side Effects You May Feel Throughout the Day (optional)
+        <textarea
+          value={sideEffects}
+          onChange={(e) => setSideEffects(e.target.value)}
+          placeholder="e.g. Drowsiness, mild nausea, dry mouth"
+          rows={2}
+        />
       </label>
       <button type="submit" disabled={submitting}>
         {submitting ? 'Adding…' : 'Add Medication'}

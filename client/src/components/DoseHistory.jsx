@@ -7,8 +7,12 @@ export default function DoseHistory({ doseLogs }) {
     <ul className="dose-history">
       {doseLogs.map((log) => (
         <li key={log._id}>
-          <strong>{log.medication?.name || 'Unknown medication'}</strong> — {log.status} at{' '}
-          {new Date(log.takenAt).toLocaleString()}
+          <span>
+            <strong>{log.medication?.name || 'Unknown medication'}</strong>
+            {' — '}
+            {new Date(log.takenAt).toLocaleString()}
+          </span>
+          <span className={`dose-status ${log.status}`}>{log.status}</span>
         </li>
       ))}
     </ul>

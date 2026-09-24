@@ -9,7 +9,7 @@ import './App.css';
 function LoginRoute() {
   const navigate = useNavigate();
   return (
-    <div id="center">
+    <div className="auth-page">
       <Login onSuccess={() => navigate('/dashboard', { replace: true })} />
     </div>
   );
@@ -18,7 +18,7 @@ function LoginRoute() {
 function RegisterRoute() {
   const navigate = useNavigate();
   return (
-    <div id="center">
+    <div className="auth-page">
       <Register onSuccess={() => navigate('/dashboard', { replace: true })} />
     </div>
   );

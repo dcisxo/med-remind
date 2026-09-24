@@ -1,13 +1,56 @@
-#center {
+/* ---------- Auth pages ---------- */
+
+.auth-page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   place-content: center;
   place-items: center;
   flex-grow: 1;
-  padding: 32px 20px;
-  box-sizing: border-box;
+  padding: max(24px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
 }
+
+.auth-card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px 24px;
+  text-align: left;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.brand img {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  flex-shrink: 0;
+}
+
+.brand span {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-h);
+}
+
+.auth-card form {
+  max-width: none;
+}
+
+.auth-card p:last-child {
+  margin-top: 16px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ---------- Forms ---------- */
 
 form {
   display: flex;
@@ -21,42 +64,76 @@ form {
 form label {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: 14px;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
   color: var(--text-h);
 }
 
-form input {
+form input,
+form textarea,
+form select {
   font: inherit;
-  padding: 8px 10px;
-  border-radius: 6px;
+  padding: 11px 12px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text-h);
+  font-weight: 400;
+  resize: vertical;
+  transition: border-color 0.15s ease;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
 }
 
 form fieldset {
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 10px;
   border: none;
   padding: 0;
   margin: 0;
 }
 
+form fieldset legend {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-h);
+  padding: 0;
+  margin-bottom: 2px;
+}
+
 form fieldset label {
   flex-direction: row;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  font-weight: 400;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
 }
 
-form button {
+form button[type='submit'] {
   font: inherit;
-  padding: 8px 12px;
-  border-radius: 6px;
+  font-weight: 600;
+  padding: 12px 16px;
+  min-height: 46px;
+  border-radius: var(--radius-sm);
   border: none;
   color: #fff;
   background: var(--accent);
   cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+form button[type='submit']:active {
+  filter: brightness(0.92);
 }
 
 form button:disabled {
@@ -64,52 +141,103 @@ form button:disabled {
   cursor: default;
 }
 
+.form-error {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+.form-success {
+  color: var(--success);
+  background: var(--success-bg);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+/* ---------- App shell ---------- */
+
 .dashboard-page {
   width: 100%;
   max-width: 640px;
   margin: 0 auto;
-  padding: 32px 20px;
+  padding: 0 16px max(24px, env(safe-area-inset-bottom));
   box-sizing: border-box;
   text-align: left;
-}
-
-.dashboard-page section {
-  margin-top: 28px;
-}
-
-.dashboard-page h3 {
-  font-size: 18px;
-  color: var(--text-h);
-  margin: 0 0 12px;
+  flex-grow: 1;
 }
 
 .dashboard-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
+  padding: max(16px, env(safe-area-inset-top)) 4px 14px;
+  margin-bottom: 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.dashboard-header .brand {
+  margin-bottom: 0;
 }
 
 .dashboard-header h1 {
-  margin: 0;
-  font-size: 28px;
+  font-size: 18px;
 }
 
-.form-error {
-  color: #e5484d;
-  margin: 0 0 8px;
+.dashboard-header button {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  min-height: 38px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-h);
+  cursor: pointer;
 }
+
+.dashboard-page section {
+  margin-top: 20px;
+}
+
+.dashboard-page h3 {
+  font-size: 15px;
+  color: var(--text-h);
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  opacity: 0.65;
+}
+
+/* ---------- Cards ---------- */
 
 .medication-form {
   max-width: none;
   margin-bottom: 0;
-  padding: 16px;
+  padding: 18px;
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 .medication-form h3 {
   margin-top: 0;
+  text-transform: none;
+  letter-spacing: normal;
+  opacity: 1;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .medication-list,
@@ -125,18 +253,38 @@ form button:disabled {
 
 .medication-card {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 12px;
-  padding: 12px 14px;
+  padding: 14px 16px;
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.medication-info strong {
+  color: var(--text-h);
+  font-size: 16px;
 }
 
 .medication-instructions {
-  margin: 4px 0 0;
+  margin: 6px 0 0;
   font-size: 14px;
   color: var(--text);
+}
+
+.medication-side-effects {
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  font-size: 13px;
+  line-height: 140%;
+  color: var(--warning);
+  background: var(--warning-bg);
+  border-radius: var(--radius-sm);
+}
+
+.side-effects-label {
+  font-weight: 700;
 }
 
 .medication-actions {
@@ -146,9 +294,13 @@ form button:disabled {
 }
 
 .medication-actions button {
+  flex: 1;
   font: inherit;
-  padding: 6px 10px;
-  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 12px;
+  min-height: 40px;
+  border-radius: var(--radius-sm);
   border: none;
   color: #fff;
   background: var(--accent);
@@ -156,27 +308,110 @@ form button:disabled {
 }
 
 .medication-actions button.danger {
-  background: #e5484d;
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger-bg);
+  flex: 0 0 auto;
 }
 
 .dose-history li {
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
 }
+
+.dose-status {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: var(--success);
+  background: var(--success-bg);
+}
+
+.dose-status.missed {
+  color: var(--danger);
+  background: var(--danger-bg);
+}
+
+.dose-status.skipped {
+  color: var(--warning);
+  background: var(--warning-bg);
+}
+
+/* ---------- Pending caregiver invites ---------- */
+
+.invite-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.invite-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+}
+
+.invite-list button {
+  font: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 8px 14px;
+  min-height: 36px;
+  border-radius: var(--radius-sm);
+  border: none;
+  color: #fff;
+  background: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ---------- Patient chip list (caregiver view) ---------- */
 
 .patient-list {
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.patient-list li {
+  flex-shrink: 0;
 }
 
 .patient-list button {
   font: inherit;
-  padding: 6px 12px;
-  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 9px 16px;
+  min-height: 40px;
+  border-radius: 999px;
   border: 1px solid var(--border);
-  background: var(--bg);
+  background: var(--surface);
   color: var(--text-h);
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .patient-list button.active {

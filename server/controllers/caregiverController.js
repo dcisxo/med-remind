@@ -63,4 +63,18 @@ async function getMyPatients(req, res) {
   }
 }
 
-module.exports = { invitePatient, acceptLink, getMyPatients };
+// GET /api/caregiver/invites  (patient views their pending caregiver invites)
+async function getMyInvites(req, res) {
+  try {
+    const links = await CaregiverLink.find({
+      patient: req.user.userId,
+      status: 'pending',
+    }).populate('caregiver', 'name email');
+
+    res.json({ links });
+  } catch (err) {
+    res.status(500).json({ message: 'Could not fetch invites', error: err.message });
+  }
+}
+
+module.exports = { invitePatient, acceptLink, getMyPatients, getMyInvites };
